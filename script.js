@@ -8,7 +8,7 @@ initialize = () => {
     /*set up the map options from the google maps API centering the map at a latitude of zero and longitude of zero
         takes parameters of the element where the map should be displayed and the options for the map*/
     var mapOptions = {
-        zoom: 2,
+        zoom: 2.5,
         center: new google.maps.LatLng(0, 0),
     };
         map = new google.maps.Map(document.getElementById('map'),
@@ -28,6 +28,8 @@ initialize = () => {
         //set a varible for the google maps latitude and longitude using API Date
         let latLong = new google.maps.LatLng(lat, long)
 
+        updateLatLong(lat, long);
+
         /*if the marker already exists then update its latitude and longitude using the setPosition method, if the marker does not exist
             then create a new google maps marker, set its latitude and longitude and render it on the map*/
         if(marker != undefined) {
@@ -35,6 +37,7 @@ initialize = () => {
         } else {
             marker = new google.maps.Marker ({
             position: latLong,
+            icon: "./smallspaceshuttle.png",
             map: map,
         })
         }
@@ -48,6 +51,11 @@ initialize = () => {
     setInterval(function() {
         setLocation()
     }, 1000)
+  }
+
+  function updateLatLong(lat, long) {
+      document.getElementById('lat').innerHTML = `latitude: ${lat}`
+      document.getElementById('lng').innerHTML = `longitude: ${long}`
   }
   
   //load the map on window load
