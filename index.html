@@ -6,16 +6,22 @@
 
     <title>Space Station Tracker</title>
     <link href="styles.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 </head>
 
     <body>
         <div id="container">
-        <div id="latlng">
-            <h3 id="lat"></h3>
-            <h3 id="lng"></h3>
+            <div id="latlng">
+                <h5 id="lat"></h5>
+                <h5 id="lng"></h5>
+            </div>
+        </div>
+        <div id="addressBox">
+            <p>Click here to find the closest address to the ISS's current location</p>
+            <button id="getAddressButton">Get Address</button>
+            <p id="address"></p>
         </div>
         <div id="map"></div>
-        </div>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC19ES5yLAZa3MgnNRPiekiLtSxiXpB06Q"></script>
         <script src="script.js"></script>
     </body>

@@ -22,8 +22,8 @@ initialize = () => {
         .then(function(data) {
         
         // set the latitude and longitute variable equal to the latitude and longitude returned from the API
-        let lat = data.latitude
-        let long = data.longitude
+        let lat = data.latitude.toFixed(4)
+        let long = data.longitude.toFixed(4)
 
         //set a varible for the google maps latitude and longitude using API Date
         let latLong = new google.maps.LatLng(lat, long)
@@ -41,6 +41,29 @@ initialize = () => {
             map: map,
         })
         }
+        function geocodeLatLng(geocoder) {
+        var geocoder = new google.maps.Geocoder;
+    
+        var geoLatLng = {lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)}
+
+        geocoder.geocode({'location': geoLatLng}, function(results, status) {
+            if (status === 'OK') {
+              if (results[0]) {
+                displayAddress(results[0].formatted_address);
+              } else {
+                displayNotOverLand()
+              }
+            } else {
+                displayNotOverLand()
+            }
+          });
+        }
+
+        document.getElementById('getAddressButton').addEventListener('click', function() {
+            geocodeLatLng();
+          });
+
+
     })
     .catch(function(error) {
       console.log(JSON.stringify(error));
@@ -53,10 +76,18 @@ initialize = () => {
     }, 1000)
   }
 
-  function updateLatLong(lat, long) {
+    updateLatLong = (lat, long) => {
       document.getElementById('lat').innerHTML = `latitude: ${lat}`
       document.getElementById('lng').innerHTML = `longitude: ${long}`
-  }
+    }
+
+    displayAddress = (address) => {
+        document.getElementById('address').innerHTML = address     
+    }
+
+    displayNotOverLand = () => {
+        document.getElementById('address').innerHTML = "Address not over land" 
+    }
   
   //load the map on window load
   google.maps.event.addDomListener(window, 'load', initialize);
