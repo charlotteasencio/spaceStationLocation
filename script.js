@@ -54,7 +54,7 @@ initialize = () => {
                 displayNotOverLand()
               }
             } else {
-                displayNotOverLand()
+              window.alert('Geocoder failed due to: ' + status);
             }
           });
         }
