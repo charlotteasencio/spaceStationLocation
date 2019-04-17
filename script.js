@@ -16,14 +16,14 @@ initialize = () => {
 
     //setLocation function allows the marker to be updated dynamically with change of API data by fetching the data and re-positing the marker at an interval of 1 second
     setLocation = () => {
-    //use javascript fetch method to connect to Open Notify's International Space Station Current Location API
-        fetch('http://api.open-notify.org/iss-now.json')
+    //use javascript fetch method to connect to "Where The ISS At" API
+        fetch('https://api.wheretheiss.at/v1/satellites/25544')
         .then((resp) => resp.json())
         .then(function(data) {
         
         // set the latitude and longitute variable equal to the latitude and longitude returned from the API
-        let lat = data.iss_position.latitude
-        let long = data.iss_position.longitude
+        let lat = data.latitude
+        let long = data.longitude
 
         //set a varible for the google maps latitude and longitude using API Date
         let latLong = new google.maps.LatLng(lat, long)
