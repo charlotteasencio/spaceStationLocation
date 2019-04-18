@@ -41,20 +41,27 @@ initialize = () => {
             map: map,
         })
         }
-        geocodeLatLng = (geocoder) => {
+
+      //Use reverse geocoding to display an address from current latitude and longitude
+      geocodeLatLng = (geocoder) => {
         var geocoder = new google.maps.Geocoder;
     
+        //set variable for the current latitude and longitude using API json data
         var geoLatLng = {lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)}
 
+        //initiate request to the geocoding service and pass it a location parameter set to geoLatLang
         geocoder.geocode({'location': geoLatLng}, function(results, status) {
             if (status === 'OK') {
               if (results[0]) {
-                displayAddress(results[0].formatted_address);
+                //use the first returned address from geocoder to get the most precise address and format it
+                document.getElementById('address').innerHTML = results[0].formatted_address   
               } else {
-                displayNotOverLand()
+                //if the ISS is over water, display "Address not over land"
+                document.getElementById('address').innerHTML = "Address not over land"
               }
             } else {
-              document.getElementById('address').innerHTML = ('Geocoder failed due to: ' + status);
+              //alert any fails and their status
+              window.alert('Geocoder failed due to: ' + status);
             }
           });
         }
@@ -70,21 +77,15 @@ initialize = () => {
     }, 1000)
   }
 
-  document.getElementById('getAddressButton').addEventListener('click', function() {
-    geocodeLatLng();
-  });
+    //run the geocodeLatLng() function when "find address" button is clicked
+    document.getElementById('getAddressButton').addEventListener('click', function() {
+      geocodeLatLng();
+    });
 
+    //update the latitude and longitude in the HTML as they change
     updateLatLong = (lat, long) => {
       document.getElementById('lat').innerHTML = `latitude: ${lat}`
       document.getElementById('lng').innerHTML = `longitude: ${long}`
-    }
-
-    displayAddress = (address) => {
-        document.getElementById('address').innerHTML = address     
-    }
-
-    displayNotOverLand = () => {
-        document.getElementById('address').innerHTML = "Address not over land" 
     }
 
   //load the map on window load
