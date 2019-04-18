@@ -54,7 +54,7 @@ initialize = () => {
                 displayNotOverLand()
               }
             } else {
-              window.alert('Geocoder failed due to: ' + status);
+              document.getElementById('address').innerHTML = ('Geocoder failed due to: ' + status);
             }
           });
         }
@@ -88,6 +88,6 @@ initialize = () => {
     displayNotOverLand = () => {
         document.getElementById('address').innerHTML = "Address not over land" 
     }
-  
+
   //load the map on window load
   google.maps.event.addDomListener(window, 'load', initialize);
