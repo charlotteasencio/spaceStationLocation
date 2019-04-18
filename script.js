@@ -16,7 +16,7 @@ initialize = () => {
 
     //setLocation function allows the marker to be updated dynamically with change of API data by fetching the data and re-positing the marker at an interval of 1 second
     setLocation = () => {
-    //use javascript fetch method to connect to "Where The ISS At" API
+        //use javascript fetch method to connect to "Where The ISS At" API
         fetch('https://api.wheretheiss.at/v1/satellites/25544')
         .then((resp) => resp.json())
         .then(function(data) {
@@ -53,15 +53,17 @@ initialize = () => {
         geocoder.geocode({'location': geoLatLng}, function(results, status) {
             if (status === 'OK') {
               if (results[0]) {
-                //use the first returned address from geocoder to get the most precise address and format it
-                document.getElementById('address').innerHTML = results[0].formatted_address   
+                  //use the first returned address from geocoder to get the most precise address and format it
+                  document.getElementById('address').innerHTML = results[0].formatted_address   
               } else {
-                //if the ISS is over water, display "Address not over land"
-                document.getElementById('address').innerHTML = "Address not over land"
+                document.getElementById('address').innerHTML = 'No results found';
               }
+            } else if (status === 'ZERO_RESULTS'){
+                document.getElementById('address').innerHTML = "No address found in this location"
+              
             } else {
-              //alert any fails and their status
-              window.alert('Geocoder failed due to: ' + status);
+                //alert any fails and their status
+                document.getElementById('address').innerHTML = `Geocoder failed due to: ${status}`
             }
           });
         }
@@ -86,6 +88,10 @@ initialize = () => {
     updateLatLong = (lat, long) => {
       document.getElementById('lat').innerHTML = `latitude: ${lat}`
       document.getElementById('lng').innerHTML = `longitude: ${long}`
+    }
+
+    overWater = () => {
+      
     }
 
   //load the map on window load
