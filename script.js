@@ -41,7 +41,7 @@ initialize = () => {
             map: map,
         })
         }
-        function geocodeLatLng(geocoder) {
+        geocodeLatLng = (geocoder) => {
         var geocoder = new google.maps.Geocoder;
     
         var geoLatLng = {lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)}
@@ -58,12 +58,6 @@ initialize = () => {
             }
           });
         }
-
-        document.getElementById('getAddressButton').addEventListener('click', function() {
-            geocodeLatLng();
-          });
-
-
     })
     .catch(function(error) {
       console.log(JSON.stringify(error));
@@ -75,6 +69,10 @@ initialize = () => {
         setLocation()
     }, 1000)
   }
+
+  document.getElementById('getAddressButton').addEventListener('click', function() {
+    geocodeLatLng();
+  });
 
     updateLatLong = (lat, long) => {
       document.getElementById('lat').innerHTML = `latitude: ${lat}`
