@@ -1,4 +1,3 @@
-//intialize variables
 var map;
 var marker;
 
