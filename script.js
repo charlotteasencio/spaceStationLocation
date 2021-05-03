@@ -1,4 +1,3 @@
-//intialize variables
 var map;
 var marker;
 
@@ -13,25 +12,19 @@ initialize = () => {
     };
         map = new google.maps.Map(document.getElementById('map'),
         mapOptions);
-
-    //setLocation function allows the marker to be updated dynamically with change of API data by fetching the data and re-positing the marker at an interval of 1 second
+    
     setLocation = () => {
-        //use javascript fetch method to connect to "Where The ISS At" API
         fetch('https://api.wheretheiss.at/v1/satellites/25544')
         .then((resp) => resp.json())
         .then(function(data) {
         
-        // set the latitude and longitute variable equal to the latitude and longitude returned from the API
         let lat = data.latitude.toFixed(4)
         let long = data.longitude.toFixed(4)
 
-        //set a varible for the google maps latitude and longitude using API Date
         let latLong = new google.maps.LatLng(lat, long)
 
         updateLatLong(lat, long);
 
-        /*if the marker already exists then update its latitude and longitude using the setPosition method, if the marker does not exist
-            then create a new google maps marker, set its latitude and longitude and render it on the map*/
         if(marker != undefined) {
             marker.setPosition(latLong)
         } else {
@@ -45,8 +38,7 @@ initialize = () => {
       //Use reverse geocoding to display an address from current latitude and longitude
       geocodeLatLng = (geocoder) => {
         var geocoder = new google.maps.Geocoder;
-    
-        //set variable for the current latitude and longitude using API json data
+          
         var geoLatLng = {lat: parseFloat(data.latitude), lng: parseFloat(data.longitude)}
 
         //initiate request to the geocoding service and pass it a location parameter set to geoLatLang
@@ -73,25 +65,18 @@ initialize = () => {
     });
     }
 
-    //use the setInterval function to update the location of the marker every second
     setInterval(function() {
         setLocation()
     }, 1000)
   }
 
-    //run the geocodeLatLng() function when "find address" button is clicked
     document.getElementById('getAddressButton').addEventListener('click', function() {
       geocodeLatLng();
     });
 
-    //update the latitude and longitude in the HTML as they change
     updateLatLong = (lat, long) => {
       document.getElementById('lat').innerHTML = `latitude: ${lat}`
       document.getElementById('lng').innerHTML = `longitude: ${long}`
-    }
-
-    overWater = () => {
-      
     }
 
   //load the map on window load
